@@ -1,16 +1,16 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
 const initialState = {
     loading: false,
-    user: [],
+    users: [],
     error: ''
 }
 
 // Generates pending, fulfilled and rejected actions types
 export const fetchUsers = createAsyncThunk('user/fetchUsers', function () {
-    return axios.get('https://jsonplaceholder.typicode.com/users')
-        .then((response) => response.data.map(user => user.name))
+    return axios.get('https://jsonplaceholder.typicode.com/usersx')
+        .then((response) => response.data)
 })
 
 const userSlice = createSlice({
@@ -22,7 +22,7 @@ const userSlice = createSlice({
         })
         builder.addCase(fetchUsers.fulfilled, (state, action) => {
             state.loading = false,
-            state.user = action.payload,
+            state.users = action.payload,
             state.error = ''
         })
         builder.addCase(fetchUsers.rejected, (state, action) => {
